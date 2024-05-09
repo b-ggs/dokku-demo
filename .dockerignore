@@ -2,7 +2,7 @@ __pycache__
 .env
 .python-version
 **.dump
-django_template/staticfiles
+dokku_demo/staticfiles
 
 Dockerfile
 compose.yml

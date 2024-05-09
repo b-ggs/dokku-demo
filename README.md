@@ -1,4 +1,4 @@
-# django-template
+# dokku-demo
 
 A template project with:
 
@@ -28,7 +28,7 @@ Clone your new repository.
 
 Ensure that you have GNU or BSD Make installed.
 
-Run the `rename` Makefile target to replace all instances of `django_template` and `django-template` with your project's name in snake_case and kebab-case, respectively.
+Run the `rename` Makefile target to replace all instances of `dokku_demo` and `dokku-demo` with your project's name in snake_case and kebab-case, respectively.
 
 ```bash
 make rename PROJECT_NAME=my_project_name_with_underscores
@@ -70,8 +70,8 @@ Several bash aliases exist in the Django Docker container such as:
 
 - `dj`: `./manage.py`
 - `djrun`: `./manage.py runserver 0:8000`
-- `djtest`: `./manage.py test --settings=django_template.settings.test -v=2`
-- `djtestkeepdb`: `./manage.py test --settings=django_template.settings.test -v=2 --keepdb`
+- `djtest`: `./manage.py test --settings=dokku_demo.settings.test -v=2`
+- `djtestkeepdb`: `./manage.py test --settings=dokku_demo.settings.test -v=2 --keepdb`
 
 Run all outstanding migrations.
 

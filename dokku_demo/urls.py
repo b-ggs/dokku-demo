@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from django_template.home import urls as home_urls
+from dokku_demo.home import urls as home_urls
 
 urlpatterns = [
     path("", include(home_urls)),

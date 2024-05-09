@@ -26,9 +26,9 @@ else:
 
 INSTALLED_APPS = [
     # Project apps
-    "django_template.home",
-    "django_template.utils",
-    "django_template.users",
+    "dokku_demo.home",
+    "dokku_demo.utils",
+    "dokku_demo.users",
     # Third-party apps
     "django_extensions",
     # Django core apps
@@ -55,7 +55,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-ROOT_URLCONF = "django_template.urls"
+ROOT_URLCONF = "dokku_demo.urls"
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "django_template.wsgi.application"
+WSGI_APPLICATION = "dokku_demo.wsgi.application"
 
 
 # Database
@@ -94,7 +94,7 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "false").lower() == "true"
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "false").lower() == "true"
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "django_template@localhost")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "dokku_demo@localhost")
 
 
 # Internationalization and localization
@@ -158,13 +158,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATICFILES_DIRS = [
-    # Global static files can be stored in django_template/staticfiles and
+    # Global static files can be stored in dokku_demo/staticfiles and
     # are accessible via the namespace `staticfiles/filename`, e.g.
     # {% static 'staticfiles/styles.css' %}
     ("staticfiles", os.path.join(BASE_DIR, "staticfiles_src")),
 ]
 
-# Collected static files will be stored in django_template/staticfiles_collected
+# Collected static files will be stored in dokku_demo/staticfiles_collected
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_collected")
 
 STATIC_URL = "/static/"
