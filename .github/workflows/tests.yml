@@ -1,0 +1,75 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres # pragma: allowlist secret
+      SECRET_KEY: test # pragma: allowlist secret
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - "5432:5432"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+        env:
+          POETRY_VERSION: "1.8.3"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: poetry
+
+      - name: Install dependencies with Poetry
+        run: poetry install
+
+      # pyright-python can be a little flaky when it's instructed to check
+      # files directly after it's first installed on GitHub Actions runners.
+      #
+      # Issues on GitHub seem to assert that it may have to do with
+      # pyright-python trying to perform type-checking at the same time as
+      # setting up node and npm for the first time.
+      #
+      # This command will set up node, npm, and pyright, so when it's run by
+      # pre-commit, pyright will have already been fully set up.
+      #
+      # https://github.com/RobertCraigie/pyright-python/issues/200
+      # https://github.com/RobertCraigie/pyright-python/issues/213
+      # https://github.com/RobertCraigie/pyright-python/issues/231
+      - name: Initialize pyright
+        run: poetry run pyright --version
+
+      - name: Run pre-commit hooks
+        uses: pre-commit/action@v3.0.1
+
+      - name: Check for missing migrations
+        run: poetry run python manage.py makemigrations --check --noinput
+        if: always()
+
+      - name: Collect staticfiles
+        run: poetry run python3 manage.py collectstatic --noinput
+
+      - name: Run tests
+        run: poetry run python3 manage.py test --settings=django_template.settings.test -v=2

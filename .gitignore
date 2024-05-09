@@ -1,0 +1,6 @@
+__pycache__
+.env
+**.dump
+django_template/staticfiles_collected
+
+node_modules
