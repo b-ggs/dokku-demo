@@ -245,3 +245,12 @@ if sentry_dsn := os.getenv("SENTRY_DSN"):
         sentry_init_args["auto_session_tracking"] = False
 
     sentry_sdk.init(**sentry_init_args)
+
+# Celery
+
+CELERY_BROKER_URL = os.getenv("REDIS_URL")
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# Notification URL
+
+NOTIFICATION_APPRISE_URL = os.getenv("NOTIFICATION_APPRISE_URL")

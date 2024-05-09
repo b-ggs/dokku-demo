@@ -3,12 +3,25 @@
 {% load i18n %}
 
 {% block content %}
-    <h1>{% trans "Welcome to your new site!" %}</h1>
+    <h1>Send a message!</h1>
 
-    <p>You are running:</p>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message.tags }}: {{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-    <ul>
-        <li>Django {{ django_version }}</li>
-        <li>Python {{ python_version }}</li>
-    </ul>
+    <form method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <textarea name="message" rows="4" cols="50" required></textarea>
+        <br />
+        <button type="submit" name="send_method" value="immediately">
+            Send immediately
+        </button>
+        <button type="submit" name="send_method" value="asynchronously">
+            Send asynchronously
+        </button>
+        {% csrf_token %}
 {% endblock content %}
